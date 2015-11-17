@@ -1,6 +1,10 @@
 'use strict'
 
-require './app.scss'
+window.moment = require('moment')
+require 'jquery'
+require 'angular'
+
+require './assets/styles/app.scss'
 
 window.app = angular.module 'app', [
 	require 'angular-animate'

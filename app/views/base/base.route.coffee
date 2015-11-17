@@ -11,5 +11,5 @@ app.config([
 			abstract: true
 		})
 
-		$urlRouterProvider.when( '/', '/home' )
+		$urlRouterProvider.when( '/', '/view1' )
 ])

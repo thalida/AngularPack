@@ -4,7 +4,7 @@ var webpack = require('webpack');
 var path = require('path');
 
 var buildPath = path.resolve(__dirname, 'public', 'build');
-var mainPath = path.resolve(__dirname, 'app', 'src.js');
+var mainPath = path.resolve(__dirname, 'app', 'app.coffee');
 
 var APP = __dirname;
 
