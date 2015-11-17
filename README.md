@@ -1,4 +1,4 @@
-# Angular Seed
+# AngularPack
 
 An [AngularJS](http://angularjs.org/) app seed for a project using webpack, gulp, coffeescript, and scss.
 
