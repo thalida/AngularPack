@@ -83,6 +83,38 @@ var create = {
 };
 
 
+gulp.task("app:create", function(){
+	var argv = yargs
+				.usage('Usage: gulp create [options]')
+
+				.options({
+					't': {
+						alias: 'type',
+						demand: true,
+						describe: 'Choose a folder structure',
+						type: 'string',
+						choices: ['view', 'directive', 'service'],
+						requiresArg: true
+					},
+					'n': {
+						alias: 'name',
+						demand: true,
+						describe: 'Name for the new structure',
+						type: 'string',
+						requiresArg: true
+					}
+				})
+
+				.help('h')
+				.alias('h', 'help')
+
+				.strict()
+
+				.argv;
+
+	create.run( argv.type, argv.name );
+});
+
 
 gulp.task("webpack:build", function(callback) {
 	var myConfig = Object.create(webpackConfig);
@@ -128,43 +160,22 @@ gulp.task("webpack:server", function(callback) {
 	});
 });
 
-gulp.task("app:create", function(){
-	var argv = yargs
-				.usage('Usage: gulp create [options]')
-
-				.options({
-					't': {
-						alias: 'type',
-						demand: true,
-						describe: 'Choose a folder structure',
-						type: 'string',
-						choices: ['view', 'directive', 'service'],
-						requiresArg: true
-					},
-					'n': {
-						alias: 'name',
-						demand: true,
-						describe: 'Name for the new structure',
-						type: 'string',
-						requiresArg: true
-					}
-				})
-
-				.help('h')
-				.alias('h', 'help')
-
-				.strict()
-
-				.argv;
-
-	create.run( argv.type, argv.name );
+gulp.task("copy:index", function(){
+	gulp.src('app/index.html')
+		.pipe(modify({
+			fileModifier: function(file, contents) {
+				contents = contents.replace('/build/', './build/') + '\n'
+				return contents;
+			}
+		}))
+		.pipe(gulp.dest(path.join('public')));
 });
 
 // The development server (the recommended option for development)
 gulp.task("default", ["webpack:server"]);
 
 // Production build
-gulp.task("build", ["webpack:build"]);
+gulp.task("build", ["webpack:build", "copy:index"]);
 
 // Production build
 gulp.task("create", ["app:create"]);
